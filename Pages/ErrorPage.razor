@@ -1,0 +1,57 @@
+﻿@page "/error"
+<style>
+    .calculate-button {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .calculate-button button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .calculate-button button:hover{
+        padding: 10px 20px;
+        background-color: #7CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .calculate-button button:active{
+        padding: 10px 20px;
+        background-color: #9CAF50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .center {
+        text-align: center;
+    }
+</style>
+<h2 class="center">An error occurred you incorrectly inputted something.</h2>
+<br />
+<br />
+<h2 class="center">to go back press this button</h2>
+<br />
+<br />
+<div class="calculate-button">
+    <button @onclick="SendBack">
+        Get Back
+    </button>
+</div>
+@using System.Threading.Tasks
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+
+
+@code {
+    
+    public void SendBack()
+    {
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+}

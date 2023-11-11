@@ -1,0 +1,550 @@
+﻿@page "/"
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Screen Split</title>
+    <style>
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Create a container to fill the screen */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Divide the container into two equal sections */
+        .top, .bottom {
+            flex: 1;
+        }
+
+        /* Style the top section with a table */
+        .top {
+            background-color: #f0f0f0;
+            padding: 2%;
+            font-size: 16px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+            background-color: #f9f9f9;
+            border: 4px solid #ffcb03;
+            
+
+        }
+        .styled-select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 18px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+        th, td {
+            border: 3px solid #ffcb03;
+            padding: 8px;
+            text-align: left;
+        }
+        
+
+        /* Style the bottom section with big text */
+        .bottom {
+            
+        }
+        .some {
+            background-color: #ffcb03;
+            color: #000;
+            font-size: 21px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 33.3%;
+        }
+        .inputy{
+            width: 75%;
+            font-size: 18.5px;
+            padding: 2px 2px;
+            margin: 2px 0;
+            box-sizing: border-box;
+            border: 5px solid #ffcb03;
+        }
+        .some2 {
+            background-color: #ffcb03;
+            color: #000;
+            font-size: 21px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 33.3%;
+            border-top: 7px solid #f0f0f0;
+        }
+        .slider-div{
+            background-color: #f0f0f5;
+            padding: 12px;
+            border: 7px solid #ffa70328;
+        }
+        .custom-slider {
+            width: 100%;
+            appearance: none;
+            background: #ccc; /* Gray background color */
+            height: 10px; /* Set the height of the slider */
+            border-radius: 5px; /* Round corners */
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .custom-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px; /* Width of the slider thumb */
+            height: 20px; /* Height of the slider thumb */
+            background: #ffab00; /* Color when selected */
+            border-radius: 50%; /* Round thumb */
+            cursor: pointer;
+            transition: width 0.2s, height 0.2s;
+        }
+
+        .custom-slider:hover::-webkit-slider-thumb {
+            width: 30px; /* Increase width on hover */
+            height: 30px; /* Increase height on hover */
+        }
+
+        .yellow-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #555;
+            border-radius: 50%; /* Makes it round */
+            background-color: white;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .yellow-radio:checked {
+            background-color: #ffcb03;
+            border: 2px solid #000;
+        }
+        .highlight {
+            background-color: white;
+            color: red; /* You can also change the text color to make it stand out more. */
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+        
+        <table>
+            <tr>
+                <td class="question">ინსტალაციის ტიპი</td>
+                <td>
+                    <input id="x1" type="radio" name="1" @onchange="(() => RoofType(1))" class="yellow-radio">
+                    <label for="x1" class="indented-checkbox-text">დახრილი სახურავი</label>
+                    <br>
+                    <input id="x2" type="radio" name="1" @onchange="(() => RoofType(2))" class="yellow-radio">
+                    <label for="x2" class="indented-checkbox-text">ბრტყელი</label>
+                    <br>
+                    <input id="x3" type="radio" name="1" @onchange="(() => RoofType(3))" class="yellow-radio">
+                    <label for="x3" class="indented-checkbox-text">მიწა</label>
+                    <br>
+                    <input id="x4" type="radio" name="1" @onchange="(() => RoofType(4))" class="yellow-radio">
+                    <label for="x4" class="indented-checkbox-text">პარკინგი</label>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="question">რომელ რეგიონში ცხოვრობ?</td>
+                <td>
+                    <select id="selectOption" class="styled-select" @bind="selectOpt">
+                        <option value="1">თბილისი</option>
+                        <option value="2">კახეთი</option>
+                        <option value="3">მცხეთა-მთიანეთი</option>
+                        <option value="4">შიდა ქართლი</option>
+                        <option value="5" disabled>აფხაზეთის ა.რ.</option>
+                        <option value="6">ქვემო ქართლი</option>
+                        <option value="7">სამცხე ჯავახეთი</option>
+                        <option value="8">იმერეთი</option>
+                        <option value="9">რაჭა-ლეჩხუმი, ქვემო სვანეთი</option>
+                        <option value="10">სამეგრელო-ზემო სვანეთი</option>
+                        <option value="11">გურია</option>Z
+                        <option value="12">აჭარის ა.რ.</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="question">იურიდიულ კომპანიას წარმოადგენთ თუ კერძო პიროვნებას?</td>
+                <td>
+                    <input id="y1" type="radio" name = "2"  @onchange="(() => clientType(1))" class="yellow-radio">
+                    <label for="y1" class="indented-checkbox-text">კერძო</label>
+                    <br>
+                    <input id="y2" type="radio" name = "2"  @onchange="(() => clientType(2))" class="yellow-radio">
+                    <label for="y2" class="indented-checkbox-text">იურიდიული</label>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="question">შენი ყოველთვიური ელექტროენერგიის ხარჯი</td>
+                <td>
+                    <input class="inputy" @bind="sliderValue" disabled="@isNotTyped" @oninput="UpdateText">  
+                    <label>₾</label>
+                </td>
+            </tr>
+
+        </table>
+
+        </div>
+        <div class="slider-div">
+        <input type="range" min="0" max="20000" step="25" @bind="sliderValue"  class="custom-slider" @oninput="UpdateText" disabled="@isNotTyped"/>
+        </div>
+        <div class="bottom">
+        <div class="some2">
+            ინსტალაცია @FinalNumber ₾ ღირს
+        </div>
+        <div class="some">
+            დასჭირდება @Convert.ToInt32(kvw) კილოვატის სიძლიერის სოლარული პანელი
+        </div>
+        <div class="some">
+            დასჭირდება @sqValue კვადრატული
+        </div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+
+@using System.Threading.Tasks
+@inject Microsoft.AspNetCore.Components.NavigationManager NavigationManager
+
+@code {
+    //background-image: url('data:image/svg+xml;utf8,<svg fill="%23333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+
+    public int sliderValue = 0;
+    public string? selectOpt;
+    public int? saxuravi;
+    public int? kerIur;
+    int forTwenty;
+    public bool isTyped = false;
+    public bool isNotTyped = true;
+    double finalnt;
+
+    public int sqValue = 0;
+    public int FinalNumber = 0;
+
+    public double kvw=0;
+
+    public void UpdateText(ChangeEventArgs e)
+    {
+        checkBools();
+        if (int.TryParse(e.Value.ToString(), out int newValue) && isTyped)
+        {
+            sliderValue = newValue;
+            updateTextInt();
+        }
+    }
+    public void updateTextInt()
+    {
+        if(kerIur==1){
+            kvw=((sliderValue*12)/0.27);
+            if(saxuravi==1){
+                daxriliCalc();
+            }
+            if(saxuravi==2){
+                brtyeliCalc();
+            }
+            if(saxuravi==3){
+                miwaCalc();
+            }
+            if(saxuravi==4){
+                parkCalc();
+            }
+            
+        }else{
+            kvw=((sliderValue*12)/0.32);
+            if(saxuravi==1){
+                daxriliCalc();
+            }
+            if(saxuravi==2){
+                brtyeliCalc();
+            }
+            if(saxuravi==3){
+                miwaCalc();
+            }
+            if(saxuravi==4){
+                parkCalc();
+            }
+        }
+        sqValue=Convert.ToInt32(kvw/0.17);
+    }
+    public void daxriliCalc(){
+
+        kvw=kvw/1200;
+
+        if(kvw<3){
+            finalnt = 1040*kvw;
+        }else
+        if(kvw>3 && kvw<5){
+            finalnt = 850*kvw;
+        }else
+        if(kvw>5 && kvw<6){
+            finalnt = 820*kvw;
+        }else
+        if(kvw>6 && kvw<8){
+            finalnt = 760*kvw;
+        }else
+        if(kvw>8 && kvw<10){
+            finalnt = 740*kvw;
+        }else
+        if(kvw>10 && kvw<30){
+            finalnt = 730*kvw;
+        }else
+        if(kvw>30 && kvw<50){
+            finalnt = 700*kvw;
+        }else
+        if(kvw>50 && kvw<100){
+            finalnt = 600*kvw;
+        }else
+        if(kvw>100 && kvw<200){
+            finalnt = 560*kvw;
+        }else
+        if(kvw>200 && kvw<300){
+            finalnt = 540*kvw;
+        }else
+        if(kvw>300 && kvw<400){
+            finalnt = 520*kvw;
+        }else
+        if(kvw>400 && kvw<500){
+            finalnt = 490*kvw;
+        }else if(kvw>500){
+            finalnt = 490*kvw;
+        }
+        
+        
+        
+        finalnt=finalnt*2.68;
+        FinalNumber=Convert.ToInt32(finalnt);
+        
+    }
+    public void brtyeliCalc(){
+
+        kvw=kvw/1200;
+        
+        if(kvw<3){
+            finalnt = 1040*kvw;
+        }else
+        if(kvw>3 && kvw<5){
+            finalnt = 850*kvw;
+        }else
+        if(kvw>5 && kvw<6){
+            finalnt = 820*kvw;
+        }else
+        if(kvw>6 && kvw<8){
+            finalnt = 760*kvw;
+        }else
+        if(kvw>8 && kvw<10){
+            finalnt = 750*kvw;
+        }else
+        if(kvw>10 && kvw<30){
+            finalnt = 740*kvw;
+        }else
+        if(kvw>30 && kvw<50){
+            finalnt = 710*kvw;
+        }else
+        if(kvw>50 && kvw<100){
+            finalnt = 600*kvw;
+        }else
+        if(kvw>100 && kvw<200){
+            finalnt = 570*kvw;
+        }else
+        if(kvw>200 && kvw<300){
+            finalnt = 550*kvw;
+        }else
+        if(kvw>300 && kvw<400){
+            finalnt = 530*kvw;
+        }else
+        if(kvw>400 && kvw<500){
+            finalnt = 515*kvw;
+        }else if(kvw>500){
+            finalnt = 515*kvw;
+        }
+        
+         
+        finalnt=finalnt*2.68;
+        FinalNumber=Convert.ToInt32(finalnt);
+        
+    }
+    public void miwaCalc(){
+
+        kvw=kvw/1300;
+
+        /*
+        if(kvw<=20){
+            FinalNumber=Convert.ToInt32(950*kvw);
+        }
+        if(kvw<=50){
+            FinalNumber=Convert.ToInt32(880*kvw);
+        }
+        if(kvw<=100){
+            FinalNumber=Convert.ToInt32(780*kvw);
+        }
+        if(kvw<=200){
+            FinalNumber=Convert.ToInt32(730*kvw);
+        }
+        if(kvw<=300){
+            FinalNumber=Convert.ToInt32(700*kvw);
+        }
+        if(kvw<=400){
+            FinalNumber=Convert.ToInt32(670*kvw);
+        }
+        if(kvw<=500){
+            FinalNumber=Convert.ToInt32(640*kvw);
+        }
+        */
+                
+        if(kvw<20){
+            finalnt = 950*kvw;
+        }else
+        if(kvw>20 && kvw<50){
+            finalnt = 880*kvw;
+        }else
+        if(kvw>50 && kvw<100){
+            finalnt = 780*kvw;
+        }else
+        if(kvw>50 && kvw<200){
+            finalnt = 730*kvw;
+        }else
+        if(kvw>200 && kvw<300){
+            finalnt = 700*kvw;
+        }else
+        if(kvw>300 && kvw<400){
+            finalnt = 670*kvw;
+        }else
+        if(kvw>400 && kvw<500){
+            finalnt = 640*kvw;
+        }else if(kvw>500){
+            finalnt = 640*kvw;
+        }
+        
+         
+        finalnt=finalnt*2.68;
+        FinalNumber=Convert.ToInt32(finalnt);
+        
+    }
+    public void parkCalc(){
+
+        kvw=kvw/1300;
+        /*
+        if(kvw<=20){
+            FinalNumber=Convert.ToInt32(1000*kvw);
+        }
+        if(kvw<=50){
+            FinalNumber=Convert.ToInt32(950*kvw);
+        }
+        if(kvw<=100){
+            FinalNumber=Convert.ToInt32(880*kvw);
+        }
+        if(kvw<=200){
+            FinalNumber=Convert.ToInt32(850*kvw);
+        }
+        if(kvw<=300){
+            FinalNumber=Convert.ToInt32(800*kvw);
+        }
+        if(kvw<=400){
+            FinalNumber=Convert.ToInt32(770*kvw);
+        }
+        if(kvw<=500){
+            FinalNumber=Convert.ToInt32(750*kvw);
+        }*/
+        if(kvw<20){
+            finalnt = 1000*kvw;
+        }else
+        if(kvw>20 && kvw<50){
+            finalnt = 950*kvw;
+        }else
+        if(kvw>50 && kvw<100){
+            finalnt = 880*kvw;
+        }else
+        if(kvw>50 && kvw<200){
+            finalnt = 850*kvw;
+        }else
+        if(kvw>200 && kvw<300){
+            finalnt = 800*kvw;
+        }else
+        if(kvw>300 && kvw<400){
+            finalnt = 770*kvw;
+        }else
+        if(kvw>400 && kvw<500){
+            finalnt = 750*kvw;
+        }else if(kvw>500){
+            finalnt = 750*kvw;
+        }
+        
+         
+        finalnt=finalnt*2.68;
+        FinalNumber=Convert.ToInt32(finalnt);
+        
+    }
+    
+    public void checkBools()
+    {
+        if(saxuravi!=null && kerIur!=null)
+        {
+            isTyped=true;
+            isNotTyped=false;
+        }
+    }
+    public void RoofType(int vary){
+        if(vary==1){
+            saxuravi=1;
+        }
+        if(vary==2){
+            saxuravi=2;
+        }
+        if(vary==3){
+            saxuravi=3;
+        }
+        if(vary==4){
+            saxuravi=4;
+        }
+        checkBools();
+        updateTextInt();
+    }
+    public void clientType(int vary){
+        if(vary==1){
+            kerIur=1;
+        }else{
+            kerIur=2;
+        }
+        checkBools();
+        updateTextInt();
+    }
+
+    public void errorer()
+    {
+        NavigationManager.NavigateTo("/error", forceLoad: true);
+    }
+
+}
